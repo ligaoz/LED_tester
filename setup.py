@@ -1,6 +1,5 @@
 '''
 Created on 22 Feb 2017
-
 @author: liga
 '''
 from setuptools import setup

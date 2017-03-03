@@ -1,6 +1,6 @@
 '''
 Created on 1 Mar 2017
-@author: liga
+@author: liga 
 '''
 import argparse
 from led_tester.control import testValues, Matrix, countLed, instructions

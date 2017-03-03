@@ -1,6 +1,5 @@
 '''
 Created on 1 Mar 2017
-
 @author: liga
 '''
 from builtins import int

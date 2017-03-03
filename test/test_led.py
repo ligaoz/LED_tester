@@ -1,6 +1,5 @@
 '''
 Created on 27 Feb 2017
-
 @author: liga
 '''
 from nose.tools import*
