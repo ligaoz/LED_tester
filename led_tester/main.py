@@ -19,6 +19,7 @@ def main():
     data.pop(0)
     cleanData = []
     for line in data:
+        line = line.strip()
         cleanData += [line.split(" "), ]
     data = cleanData
     matrix = Matrix(size)
@@ -27,7 +28,7 @@ def main():
     else:
         for i in range(0, len(data)):
             if testValues(data[i], size) == True:
-                matrix = instructions(data[i], matrix)
+                matrix = instructions(data[i], matrix, size)
             else:
                 continue
         return countLed(matrix, size)
