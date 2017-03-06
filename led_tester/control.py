@@ -6,42 +6,58 @@ from builtins import int
 errorMessage = "Input details were invalid"
 
 
-def parse_line(obj):
+def parse_line(obj, size):
     """function to extract coordinates and command from a line"""
-    if obj[0] == "turn":
-        sep = (obj[2].split(","))
-        rowFrom = int(sep[0])
-        columnFrom = int(sep[1])
-        sep2 = obj[4].split(",")
-        rowTo = int(sep2[0])
-        columnTo = int(sep2[1])
-        if obj[1] == "off":
-            cmd = "turn off"
-            return rowFrom, rowTo + 1, columnFrom, columnTo + 1, cmd
-        elif obj[1] == "on":
-            cmd = "turn on"
+    def marginCheck(rowFrom, columnFrom, rowTo, columnTo,  size):
+        """Function to check m=out of range values and convert to valid values """
+        if columnTo >= size:
+            columnTo = size - 1
+        if size <= rowTo:
+            rowTo = size - 1
+        if rowFrom < 0:
+            rowFrom = 0
+        if 0 > columnFrom:
+            columnFrom = 0
+        return rowFrom, columnFrom, rowTo, columnTo
+    try:
+        if obj[0] == "turn" and (obj[1] == "on" or obj[1] == "off"):
+            sep = (obj[2].split(","))
+            rowFrom = int(sep[0])
+            columnFrom = int(sep[1].replace(" ", ""))
+            sep2 = obj[4].split(",")
+            rowTo = int(sep2[0])
+            columnTo = int(sep2[1].replace(" ", ""))
+            rowFrom, columnFrom, rowTo, columnTo = marginCheck(
+                rowFrom, columnFrom, rowTo, columnTo, size)
+            if obj[1] == "off":
+                cmd = "turn off"
+                return rowFrom, rowTo + 1, columnFrom, columnTo + 1, cmd
+            elif obj[1] == "on":
+                cmd = "turn on"
+                return rowFrom, rowTo + 1, columnFrom, columnTo + 1, cmd
+            else:
+                print("Parse_line error: ", errorMessage)
+                return False
+
+        elif obj[0] == "switch":
+            sep = obj[1].split(",")
+            rowFrom = int(sep[0])
+            columnFrom = int(sep[1])
+            sep2 = obj[3].split(",")
+            rowFrom, columnFrom, rowTo, columnTo = marginCheck(
+                rowFrom, columnFrom, int(sep2[0]), int(sep2[1]), size)
+            cmd = "switch"
             return rowFrom, rowTo + 1, columnFrom, columnTo + 1, cmd
         else:
             print("Parse_line error: ", errorMessage)
             return False
-
-    elif obj[0] == "switch":
-        sep = obj[1].split(",")
-        rowFrom = int(sep[0])
-        columnFrom = int(sep[1])
-        sep2 = obj[3].split(",")
-        rowTo = int(sep2[0])
-        columnTo = int(sep2[1])
-        cmd = "switch"
-        return rowFrom, rowTo + 1, columnFrom, columnTo + 1, cmd
-    else:
-        print("Parse_line error: ", errorMessage)
+    except ValueError:
         return False
 
 
-def instructions(obj, matrix):
+def instructions(obj, matrix, size):
     """Function to execute commands"""
-    (rowFrom, rowTo, columnFrom, columnTo, cmd) = parse_line(obj)
+    (rowFrom, rowTo, columnFrom, columnTo, cmd) = parse_line(obj, size)
     print(cmd, rowFrom, columnFrom, "through", rowTo, columnTo)
     if cmd == "turn on":
         return switchOn(rowFrom, rowTo, columnFrom, columnTo, matrix)
@@ -55,10 +71,10 @@ def instructions(obj, matrix):
 
 def testValues(obj, size):
     """Function to test if input values are valid, returns boolean values """
-    x = parse_line(obj)
+    x = parse_line(obj, size)
     if x:
         (rowFrom, rowTo, columnFrom, columnTo, cmd) = x
-        if (rowFrom <= rowTo and columnFrom <= columnTo and columnFrom, rowFrom >= 0):
+        if (rowFrom <= rowTo and columnFrom <= columnTo and columnFrom >= 0 and rowFrom >= 0):
             return True
     else:
         print("Test_values error: ", errorMessage)
