@@ -18,9 +18,12 @@ def main():
     print(size)
     data.pop(0)
     cleanData = []
+
     for line in data:
         line = line.strip()
-        cleanData += [line.split(" "), ]
+        line = line.replace(",", " ")
+        cleanData += [line.split(), ]
+        print(line)
     data = cleanData
     matrix = Matrix(size)
     if matrix == False:

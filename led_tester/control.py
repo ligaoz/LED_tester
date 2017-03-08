@@ -21,12 +21,10 @@ def parse_line(obj, size):
         return rowFrom, columnFrom, rowTo, columnTo
     try:
         if obj[0] == "turn" and (obj[1] == "on" or obj[1] == "off"):
-            sep = (obj[2].split(","))
-            rowFrom = int(sep[0])
-            columnFrom = int(sep[1].replace(" ", ""))
-            sep2 = obj[4].split(",")
-            rowTo = int(sep2[0])
-            columnTo = int(sep2[1].replace(" ", ""))
+            rowFrom = int(obj[2])
+            columnFrom = int(obj[3])
+            rowTo = int(obj[5])
+            columnTo = int(obj[6])
             rowFrom, columnFrom, rowTo, columnTo = marginCheck(
                 rowFrom, columnFrom, rowTo, columnTo, size)
             if obj[1] == "off":
@@ -40,18 +38,18 @@ def parse_line(obj, size):
                 return False
 
         elif obj[0] == "switch":
-            sep = obj[1].split(",")
-            rowFrom = int(sep[0])
-            columnFrom = int(sep[1])
-            sep2 = obj[3].split(",")
+            rowFrom = int(obj[1])
+            columnFrom = int(obj[2])
+            rowTo = int(obj[4])
+            columnTo = int(obj[5])
             rowFrom, columnFrom, rowTo, columnTo = marginCheck(
-                rowFrom, columnFrom, int(sep2[0]), int(sep2[1]), size)
+                rowFrom, columnFrom, rowTo, columnTo, size)
             cmd = "switch"
             return rowFrom, rowTo + 1, columnFrom, columnTo + 1, cmd
         else:
             print("Parse_line error: ", errorMessage)
             return False
-    except ValueError:
+    except IndexError:
         return False
 
 

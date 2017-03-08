@@ -4,7 +4,7 @@ from led_tester.control import parse_line, Matrix, testValues, instructions, cou
 
 
 def test_parsing():
-    ok_(parse_line(['tuna', 'on', '9303,6790', 'through', '9901,9909'])
+    ok_(parse_line(['tuna', 'on', '9303,6790', 'through', '9901,9912'], 9910)
         == False, print("Parsing working correctly"))
     (rowFrom, rowTo, columnFrom, columnTo, cmd) = parse_line(
         ['turn', 'on', '9303,6790', 'through', '9901,9909'])
