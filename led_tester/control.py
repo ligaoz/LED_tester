@@ -54,7 +54,7 @@ def parse_line(obj, size):
 
 
 def instructions(obj, matrix, size):
-    """Function to execute commands"""
+    """Function to execute commands from data line"""
     (rowFrom, rowTo, columnFrom, columnTo, cmd) = parse_line(obj, size)
     print(cmd, rowFrom, columnFrom, "through", rowTo, columnTo)
     if cmd == "turn on":
@@ -80,7 +80,7 @@ def testValues(obj, size):
 
 
 def switchOn(rowFrom, rowTo, columnFrom, columnTo, matrix):
-    """Function to switch LEDs on"""
+    """Function to switch LEDs on, returns updated matrix"""
     for j in range(columnFrom, columnTo):
         for i in range(rowFrom, rowTo):
             matrix[j][i] = 1
@@ -88,7 +88,7 @@ def switchOn(rowFrom, rowTo, columnFrom, columnTo, matrix):
 
 
 def switchOff(rowFrom, rowTo, columnFrom, columnTo, matrix):
-    """Function to switch LEDs off"""
+    """Function to switch LEDs off, returns updates matrix"""
     for j in range(columnFrom, columnTo):
         for i in range(rowFrom, rowTo):
             matrix[j][i] = 0
@@ -96,7 +96,7 @@ def switchOff(rowFrom, rowTo, columnFrom, columnTo, matrix):
 
 
 def toggle(rowFrom, rowTo, columnFrom, columnTo, matrix):
-    """Function to toggle LEDs on off """
+    """Function to toggle LEDs on off, returns updated matrix"""
     for j in range(columnFrom, columnTo):
         for i in range(rowFrom, rowTo):
             if (matrix[j][i] == 1):
@@ -107,7 +107,7 @@ def toggle(rowFrom, rowTo, columnFrom, columnTo, matrix):
 
 
 def countLed(matrix, size):
-    """Function to calculate number of LEDs ON"""
+    """Function to calculate number of LEDs ON, returns integer value"""
     count = 0
     for j in range(size):
         for i in range(size):
